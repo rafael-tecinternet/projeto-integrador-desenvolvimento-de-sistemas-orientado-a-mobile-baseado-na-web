@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Login do Paciente{% endblock %}
+{% block content %}
+  <h2>Login do Paciente</h2>
+  <form method="post" action="{{ url_for('patient_auth_bp.login') }}">
+    <label>Email:</label>
+    <input type="email" name="email" required><br>
+    <label>Senha:</label>
+    <input type="password" name="password" required><br>
+    <button type="submit">Entrar</button>
+  </form>
+  <p>Não possui uma conta? <a href="{{ url_for('patient_auth_bp.register') }}">Cadastre-se aqui</a></p>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div>
+        {% for category, message in messages %}
+          <p class="{{ category }}">{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+{% endblock %}

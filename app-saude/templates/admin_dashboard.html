@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+  <h2>Painel Administrativo</h2>
+  
+  <!-- Seção de Usuários -->
+  <section>
+    <h3>
+      Usuários (Pacientes)
+      <button class="toggle-btn" onclick="toggleVisibility('users-list', this)">
+        <span class="toggle-icon">&#9660;</span>
+      </button>
+    </h3>
+    <div id="users-list">
+      <input type="text" id="user-search" placeholder="Buscar usuário..." onkeyup="filterList('users-list', 'user-search')">
+      <ul>
+        {% for user in users %}
+          <li>{{ user.name }} - {{ user.email }}</li>
+        {% else %}
+          <li>Nenhum usuário cadastrado.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+  
+  <!-- Seção de Hospitais -->
+  <section>
+    <h3>
+      Hospitais
+      <button class="toggle-btn" onclick="toggleVisibility('hospitals-list', this)">
+        <span class="toggle-icon">&#9660;</span>
+      </button>
+    </h3>
+    <div id="hospitals-list">
+      <input type="text" id="hospital-search" placeholder="Buscar hospital..." onkeyup="filterList('hospitals-list', 'hospital-search')">
+      <ul>
+        {% for hospital in hospitals %}
+          <li>{{ hospital.name }}</li>
+        {% else %}
+          <li>Nenhum hospital cadastrado.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+  
+  <!-- Seção de Especialidades -->
+  <section>
+    <h3>
+      Especialidades
+      <button class="toggle-btn" onclick="toggleVisibility('specialties-list', this)">
+        <span class="toggle-icon">&#9660;</span>
+      </button>
+    </h3>
+    <div id="specialties-list">
+      <input type="text" id="specialty-search" placeholder="Buscar especialidade..." onkeyup="filterList('specialties-list', 'specialty-search')">
+      <ul>
+        {% for spec in specialties %}
+          <li>{{ spec.name }}</li>
+        {% else %}
+          <li>Nenhuma especialidade cadastrada.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+  
+  <!-- Seção de Doutores -->
+  <section>
+    <h3>
+      Doutores
+      <button class="toggle-btn" onclick="toggleVisibility('doctors-list', this)">
+        <span class="toggle-icon">&#9660;</span>
+      </button>
+    </h3>
+    <div id="doctors-list">
+      <input type="text" id="doctor-search" placeholder="Buscar doutor..." onkeyup="filterList('doctors-list', 'doctor-search')">
+      <ul>
+        {% for doc in doctors %}
+          <li>{{ doc.name }} (CRM: {{ doc.crm }}) - Especialidade: {{ doc.specialty.name }} - Hospital: {{ doc.hospital.name }}</li>
+        {% else %}
+          <li>Nenhum doutor cadastrado.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+  
+  <hr>
+  
+  <!-- Formulário para Adição de Hospital -->
+  <section>
+    <h3>Adicionar Hospital</h3>
+    <form action="{{ url_for('admin_bp.add_hospital') }}" method="post">
+      <input type="text" name="name" placeholder="Nome do Hospital" required>
+      <button type="submit">Adicionar Hospital</button>
+    </form>
+  </section>
+  
+  <!-- Formulário para Adição de Especialidade -->
+  <section>
+    <h3>Adicionar Especialidade</h3>
+    <form action="{{ url_for('admin_bp.add_specialty') }}" method="post">
+      <input type="text" name="name" placeholder="Nome da Especialidade" required>
+      <button type="submit">Adicionar Especialidade</button>
+    </form>
+  </section>
+  
+  <!-- Formulário para Adição de Doutor -->
+  <section>
+    <h3>Adicionar Doutor</h3>
+    <form action="{{ url_for('admin_bp.add_doctor') }}" method="post">
+      <input type="text" name="name" placeholder="Nome do Doutor" required>
+      <input type="text" name="crm" placeholder="CRM" required><br>
+      <label>Especialidade:</label>
+      <select name="specialty_id" required>
+        <option value="">Selecione a Especialidade</option>
+        {% for spec in specialties %}
+          <option value="{{ spec.id }}">{{ spec.name }}</option>
+        {% endfor %}
+      </select><br>
+      <label>Hospital:</label>
+      <select name="hospital_id" required>
+        <option value="">Selecione o Hospital</option>
+        {% for hospital in hospitals %}
+          <option value="{{ hospital.id }}">{{ hospital.name }}</option>
+        {% endfor %}
+      </select><br>
+      <button type="submit">Adicionar Doutor</button>
+    </form>
+  </section>
+  
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-messages">
+        {% for category, message in messages %}
+          <p class="{{ category }}">{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+  
+  <a href="{{ url_for('admin_auth_bp.admin_logout') }}">Sair do Admin</a>
+  
+  <!-- Scripts para Controle de Visibilidade e Filtro -->
+  <script>
+    function toggleVisibility(elementId, btn) {
+      var elem = document.getElementById(elementId);
+      var icon = btn.querySelector('.toggle-icon');
+      if (elem.style.display === "none" || elem.style.display === "") {
+        elem.style.display = "block";
+        icon.innerHTML = "&#9660;"; // seta para baixo
+        btn.classList.remove('collapsed');
+      } else {
+        elem.style.display = "none";
+        icon.innerHTML = "&#9654;"; // seta para a direita
+        btn.classList.add('collapsed');
+      }
+    }
+
+    function filterList(listId, inputId) {
+      var input = document.getElementById(inputId);
+      var filter = input.value.toUpperCase();
+      var ul = document.getElementById(listId).getElementsByTagName("ul")[0];
+      var li = ul.getElementsByTagName("li");
+      for (var i = 0; i < li.length; i++) {
+        var txtValue = li[i].textContent || li[i].innerText;
+        li[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+      }
+    }
+  </script>
+{% endblock %}

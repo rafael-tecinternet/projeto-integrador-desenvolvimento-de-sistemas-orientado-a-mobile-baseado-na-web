@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Agendar Consulta{% endblock %}
+{% block content %}
+  <h2>Agendar Consulta</h2>
+  <form method="post" action="{{ url_for('patient_bp.schedule') }}">
+    <label>Hospital:</label>
+    <select name="hospital_id" required>
+      <option value="">Selecione um Hospital</option>
+      {% for hospital in hospitals %}
+        <option value="{{ hospital.id }}">{{ hospital.name }}</option>
+      {% endfor %}
+    </select><br>
+    
+    <label>Especialidade:</label>
+    <select name="specialty_id" id="specialty-select" required>
+      <option value="">Selecione uma Especialidade</option>
+      {% for spec in specialties %}
+        <option value="{{ spec.id }}">{{ spec.name }}</option>
+      {% endfor %}
+    </select><br>
+    
+    <label>Médico:</label>
+    <select name="doctor_id" id="doctor-select" required>
+      <option value="">Selecione um Médico</option>
+      {% for doc in doctors %}
+        <!-- Armazena o id da especialidade para filtragem -->
+        <option value="{{ doc.id }}" data-specialty="{{ doc.specialty_id }}">{{ doc.name }} (CRM: {{ doc.crm }})</option>
+      {% endfor %}
+    </select><br>
+    
+    <label>Data e Hora:</label>
+    <input type="datetime-local" name="date" required><br>
+    
+    <button type="submit">Agendar</button>
+  </form>
+  
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div>
+        {% for category, message in messages %}
+          <p class="{{ category }}">{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+  
+  <script>
+    document.getElementById('specialty-select').addEventListener('change', function() {
+      var selectedSpec = this.value;
+      var doctorSelect = document.getElementById('doctor-select');
+      for (var i = 0; i < doctorSelect.options.length; i++) {
+        var option = doctorSelect.options[i];
+        if (option.value === "") continue;
+        if (option.getAttribute('data-specialty') === selectedSpec) {
+          option.style.display = 'block';
+        } else {
+          option.style.display = 'none';
+        }
+      }
+      doctorSelect.value = "";
+    });
+  </script>
+{% endblock %}

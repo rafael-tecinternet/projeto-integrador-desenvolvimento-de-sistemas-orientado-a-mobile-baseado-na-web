@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Bem-vindo - Agendamento Hospitalar{% endblock %}
+{% block content %}
+
+<!-- Seção Hero -->
+<section class="hero" style="background: url('{{ url_for('static', filename='images/hero-hospital.jpg') }}') no-repeat center center/cover; padding: 4rem 1rem; color: #fff; text-align: center;">
+  <div class="hero-content">
+    <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">Agende sua Consulta com Facilidade</h2>
+    <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto 2rem;">Encontre o hospital, a especialidade e o médico ideal para você, e agende sua consulta de forma rápida e segura.</p>
+    <a href="{{ url_for('patient_auth_bp.login') }}" class="btn btn-primary" style="padding: 0.75rem 1.5rem; font-size: 1.1rem;">Agende Agora</a>
+  </div>
+</section>
+
+<!-- Seção de Destaques -->
+<section class="features" style="display: flex; flex-wrap: wrap; justify-content: space-around; gap: 2rem; padding: 2rem 1rem; background: #fff;">
+  <div class="feature" style="flex: 1 1 280px; padding: 1rem; text-align: center;">
+    <h3 style="margin-bottom: 0.5rem; color: var(--primary-color);">Hospitais de Qualidade</h3>
+    <p>Atendemos em hospitais de referência para garantir o melhor cuidado para você.</p>
+  </div>
+  <div class="feature" style="flex: 1 1 280px; padding: 1rem; text-align: center;">
+    <h3 style="margin-bottom: 0.5rem; color: var(--primary-color);">Médicos Especializados</h3>
+    <p>Conte com profissionais renomados e especializados em diversas áreas da saúde.</p>
+  </div>
+  <div class="feature" style="flex: 1 1 280px; padding: 1rem; text-align: center;">
+    <h3 style="margin-bottom: 0.5rem; color: var(--primary-color);">Agendamento Rápido</h3>
+    <p>Sistema intuitivo que permite agendar consultas em poucos cliques.</p>
+  </div>
+</section>
+
+<!-- Seção CTA Final -->
+<section class="cta" style="padding: 2rem 1rem; text-align: center; background: var(--primary-color); color: #fff;">
+  <h2 style="margin-bottom: 1rem;">Pronto para cuidar da sua saúde?</h2>
+  <a href="{{ url_for('patient_auth_bp.login') }}" class="btn btn-secondary" style="padding: 0.75rem 1.5rem; font-size: 1.1rem;">Comece Agora</a>
+</section>
+
+{% endblock %}
