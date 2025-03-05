@@ -1,6 +1,14 @@
 # App Saúde - Sistema de Agendamento Hospitalar
 
-Este é um projeto desenvolvido como atividade acadêmica para criar um sistema simples de agendamento de consultas em hospitais. O projeto foi feito com Flask no backend e HTML, CSS e JavaScript puro no frontend.
+Este é um projeto desenvolvido para criar um sistema simples de agendamento de consultas em hospitais. O projeto foi feito com Flask no backend e HTML, CSS e JavaScript puro no frontend.
+
+## Antes de Começar!
+   - Faça a seguinte ação caso não haja essas informações no banco de dados SQLite:
+   - Execute os arquivos create_admin.py e seed_data na pasta addons, para gera um administrador e os dados aleatorios do banco de dados! Assim você poderá testar os agendamentos sem criar um a um.
+
+## (Opcional) Delete o banco de dados "and try yourself"!
+   - Delete a pasta data, para executar os arquivos acima, ou simplesmente continue testando.
+
 
 ## Como Desenvolvemos o Projeto
 

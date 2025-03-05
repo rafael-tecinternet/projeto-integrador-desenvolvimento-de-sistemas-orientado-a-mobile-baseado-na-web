@@ -8,15 +8,9 @@ from routes.admin_routes import admin_bp
 from routes.admin_auth_routes import admin_auth_bp
 from routes.patient_routes import patient_bp
 from routes.patient_auth_routes import patient_auth_bp
-from config import Config
 
 app = Flask(__name__)
 app.config.from_object(Config)
-
-try:
-    os.makedirs(app.instance_path)
-except OSError:
-    pass
 
 db.init_app(app)
 with app.app_context():
@@ -30,4 +24,5 @@ app.register_blueprint(patient_bp)
 app.register_blueprint(patient_auth_bp)
 
 if __name__ == '__main__':
+    print("Data directory:", os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data'))
     app.run(debug=True)
