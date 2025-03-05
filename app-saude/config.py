@@ -9,3 +9,4 @@ class Config:
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(data_dir, 'db.sqlite3')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = "UmaChaveMuitoSecreta"
+#config
