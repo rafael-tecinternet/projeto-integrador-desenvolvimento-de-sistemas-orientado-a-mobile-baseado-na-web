@@ -58,3 +58,4 @@ def api_create_appointment():
     db.session.add(new_appointment)
     db.session.commit()
     return jsonify({'message': 'Agendamento criado com sucesso!'}), 201
+#rotas
