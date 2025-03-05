@@ -1,7 +1,7 @@
 
 # App Saúde - Sistema de Agendamento Hospitalar
 
-Neste projeto, desenvolvemos um sistema simples de agendamento de consultas em hospitais. O sistema foi feito com Flask no backend e HTML, CSS e JavaScript puro no frontend.
+Neste projeto, desenvolvemos um sistema simples de agendamento de consultas em hospitais. O sistema foi feito usando Flask no backend e HTML, CSS e JavaScript puro no frontend.
 
 ## Tecnologias Usadas
 
